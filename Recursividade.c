@@ -7,7 +7,7 @@ int rec_fat(int n);
 int rec_mult(int a, int b);
 int rec_divide(int a, int b);
 int rec_fibo(int p);
-int rec_convertebase(int dec, int base); //precisou do return. Pru quê?
+int rec_convertebase(int dec, int base); 
 
 //funções iterativas
 int it_fat(int n);
