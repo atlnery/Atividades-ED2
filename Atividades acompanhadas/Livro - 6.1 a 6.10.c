@@ -34,15 +34,15 @@
 
 //6.3 Crie uma função recursiva para calcular a soma 1 + 1/2 + 1/3 +...+ 1/n, sendo n != 0 um número natural.
     type plusType(type n){
-        if(n == 0) return n;
-        if(n == 1) return 1;
+        if (n == 0) return n;
+        if (n == 1) return 1;
         return (1/n) + plusType(n-1);
     }
 
 //6.4 Usando soma e subtração, crie uma função recursiva para calcular o produto de dois números naturais m e n.
     int multiplication(int m, int n) {
         if ((m == 0) || (n == 0)) return 0; 
-        if(m == 1) return n;
+        if (m == 1) return n;
         return n + multiplication (m-1, n);
     }
 
@@ -80,7 +80,7 @@
 
 //6.9 Crie uma função recursiva para calcular a soma dos n primeiros itens armazenados num vetor de números inteiros v.
     type vPlus(type* v, int n){
-        if(n > sizeof(v)) return 0;
+        if (n > sizeof(v)) return 0;
         if (n == 0) return v[0];
         return v[n] + vPlus(v, n-1);
     }
@@ -90,7 +90,7 @@
         if (last < first) return -404;
         if (last * first < 0) return -404;
         
-        if(last == first) return v[first];
+        if (last == first) return v[first];
         else {
             int x = maxValue(v, first+1, last); 
             return fmax(x, v[first]);
