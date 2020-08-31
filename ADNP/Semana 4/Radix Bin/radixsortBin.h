@@ -10,5 +10,4 @@
     void counting_sortBin(char** v, int n, int div, int base, char** temp);
     int maxLengthBin(char** bin, int n);
 
-
 #endif /*RADIXSORTBIN_H*/
