@@ -69,14 +69,13 @@ int convertebin(char* bin, int size) {
     int j = size-1;
     char aux[2];
 
-    while (i < size) {
+    while (i++ < size) {
         strncpy(aux, &bin[i], 1);
         
         if (atoi(aux)) {
             x += pow(2, j);
         }
-
-        i++; j--;
+        j--;
     }
 
     return x;
