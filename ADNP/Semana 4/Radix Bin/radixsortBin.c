@@ -87,13 +87,12 @@ int maxLengthBin(char** bin, int n) {
     int i = 0; 
     int largest = strlen(bin[0]);
 
-    while (i < n) {
+    while (i++ < n) {
        int next = strlen(bin[i]);
        
        if (largest < next) {
            largest = next;
        }
-       i++;
     }
 
     return largest;
