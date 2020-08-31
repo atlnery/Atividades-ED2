@@ -1,7 +1,6 @@
 #ifndef VECTORBIN_H
 #define VECTORBIN_H
 
-
     #include <stdio.h>
     #include <time.h>
     #include <stdlib.h>
@@ -21,6 +20,5 @@
     void freeString(char** bin, int n);
     void reverse(char  ** bin, int n);
     char *strrev(char *str);
-
 
 #endif /*VECTORBIN_H*/
