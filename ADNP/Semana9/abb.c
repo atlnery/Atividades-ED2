@@ -24,13 +24,9 @@ static ABB* ABB_insert_father(ABB** A, int key, ABB* father) {
         return NULL;
     }
 
-    if (key < (*A)->key) {
-        ABB_insert_father(&(*A)->left, key, (*A));
-    }
+    if (key < (*A)->key) { ABB_insert_father(&(*A)->left, key, (*A)); }
 
-    else {
-        ABB_insert_father(&(*A)->right, key, (*A));
-    }
+    else { ABB_insert_father(&(*A)->right, key, (*A)); }
 }
 
 
@@ -85,8 +81,7 @@ static void print_No(int key, int num)  {
     }
     else {
         printf("%d\n\n", key);
-        printf(" ");
-        
+        printf(" ");        
     }
 }
 
@@ -120,8 +115,7 @@ void ABB_destroy(ABB* no){
             remove->father->left = NULL;
         }
         else {
-            remove->father->right = NULL;      
-            
+            remove->father->right = NULL;            
         }
     }
 
@@ -158,13 +152,8 @@ void ABB_destroy(ABB* no){
        
         ABB* sx = ABB_largest_left(remove);
  
-        if (sx == remove->left) {          
-            remove->left = sx->left;      
-               
-        }
-        else {
-           sx->father->right = NULL;
-        }
+        if (sx == remove->left) { remove->left = sx->left; }
+        else { sx->father->right = NULL; }
 
         control = 0;
         remove->key = sx->key; 
@@ -181,7 +170,6 @@ ABB* ABB_largest_left(ABB *no){
     ABB* aux = no->left; 
     ABB* largest = aux;
     
-
     while (!!aux) {
         largest = aux;
         aux = aux->right;
@@ -196,7 +184,6 @@ ABB* ABB_smaller_right(ABB *no){
     ABB* aux = no->right; 
     ABB* largest = aux;
     
-
     while (!!aux) {
         largest = aux;
         aux = aux->left;
