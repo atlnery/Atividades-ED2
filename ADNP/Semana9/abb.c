@@ -1,6 +1,11 @@
-#include "abb.h"
+##include "abb.h"
 
-
+/* função para criação de nó na arvore
+ *  @param key: chave para o nó
+ *  @param left: nó a esquerda do criado
+ *  @param right: nó a direita do criado
+ *  @param father: nó pai 
+*/
 ABB* ABB_create(int key, ABB* left, ABB* right, ABB* father) {
     ABB* new; 
     new = malloc(sizeof(ABB));
@@ -12,11 +17,19 @@ ABB* ABB_create(int key, ABB* left, ABB* right, ABB* father) {
     return new;
 }
 
-//percurso pré-ordem    
+/* função para inserção de nó na arvore
+ *  @param key: chave para o nó
+*/   
 ABB* ABB_insert(ABB** A, int key){
     ABB_insert_father(A, key, (*A));
 }
 
+
+/* função para inserção de nó na arvore com especificação do pai
+ *  @param A: ponteiro para o endereço do nó a ser inserido
+ *  @param key: chave para o nó
+ *  @param father: endereço do pai do nó 
+*/ 
 static ABB* ABB_insert_father(ABB** A, int key, ABB* father) {
 
     if(!(*A)) { 
@@ -24,12 +37,19 @@ static ABB* ABB_insert_father(ABB** A, int key, ABB* father) {
         return NULL;
     }
 
-    if (key < (*A)->key) { ABB_insert_father(&(*A)->left, key, (*A)); }
+    if (key < (*A)->key) {
+        ABB_insert_father(&(*A)->left, key, (*A));
+    }
 
-    else { ABB_insert_father(&(*A)->right, key, (*A)); }
+    else {
+        ABB_insert_father(&(*A)->right, key, (*A));
+    }
 }
 
-
+/* função para busca de nó na arvore
+ *  @param no: ponteiro para o nó a ser inserido
+ *  @param key: chave a ser buscada
+*/ 
 ABB* ABB_search(ABB* no, int key) {
     if (!no) { return NULL; }
 
@@ -39,19 +59,26 @@ ABB* ABB_search(ABB* no, int key) {
     return ABB_search(next, key);
 }
 
+/*  função para impressão da arvore. 
+ *  @param no: ponteiro para no da arvore
+ *  @param type: tipo de impressão a ser realizada
+ *  1: lista ordem
+ *  2: imprime arvore em pre ordem
+ *  3: lista pos ordem 
+*/
 void ABB_print(ABB* no, PRINT_TYPE type) {
     if (!no) {return;}
 
     switch (type) {
-    case 1: 
+    case 1: //ORDEM
         ABB_print(no->left, type);
         printf("%d\t", no->key);
         ABB_print(no->right, type);
         break;
-    case 2: 
-        ABB_print_pre_ordem(no, 2);
+    case 2: //PRE ORDEM
+        ABB_print_pre_ordem(no, 1, "raiz");
         break;
-    case 3:
+    case 3: //POS ORDEM
         ABB_print(no->left, type);
         ABB_print(no->right, type);
         printf("%d\t", no->key);
@@ -61,31 +88,40 @@ void ABB_print(ABB* no, PRINT_TYPE type) {
     }
 }
 
-static void ABB_print_pre_ordem(ABB* no, int num) {
+/* função impressão da árvore
+ *  @param no: ponteiro para a árvore a ser impresso
+ *  @param num: controle necessário para impressão 
+ *  @param pos: posição que o nó está (esq, dir ou raiz)
+*/ 
+static void ABB_print_pre_ordem(ABB* no, int num, char* pos) {
     if (!no) {
-        print_No(-404, num);
+        print_No(INT_MAX, num, pos);
         return;
     }
 
-    ABB_print_pre_ordem(no->left, num+1);
-    ABB_print_pre_ordem(no->right, num+1);
-    print_No(no->key, num);
+    ABB_print_pre_ordem(no->right, num+1, "dir");
+    print_No(no->key, num, pos);
+    ABB_print_pre_ordem(no->left, num+1, "esq");
 }
 
-static void print_No(int key, int num)  {
+/* função auxiliar de impressão de nó da árvore
+ *  @param key: valor da chave
+ *  @param num: controle necessário para impressão 
+ *  @param pos: posição que o nó está (esq, dir ou raiz)
+*/
+static void print_No(int key, int num, char* pos)  {
     int i;
     for (i = 0; i < num; i++) 
-    printf("   ");
-    if (key == -404) {
-        printf("*\n\n");
-    }
-    else {
-        printf("%d\n\n", key);
-        printf(" ");        
-    }
+        printf("          ");
+        if (key == INT_MAX) 
+            printf("--(%s)\n", pos);
+        else  
+            printf("%d(%s)\n", key, pos); 
 }
 
-
+/* retorna quantidade de elementos na árvore
+ *  @param no: ponteiro para a árvore
+*/
 int ABB_size(ABB* no) {
     if(!no)  { return 0; }
 
@@ -100,6 +136,10 @@ void ABB_destroy(ABB* no){
     free(no);
 }
 
+/* função remoção de elemento da árvore
+ *  @param no: ponteiro para o endereço do nó a ser removido
+ *  @param key: chave a ser removida
+*/
  int ABB_remove(ABB **no, int key){
 
     if (!(*no)) return -1;
@@ -115,35 +155,47 @@ void ABB_destroy(ABB* no){
             remove->father->left = NULL;
         }
         else {
-            remove->father->right = NULL;            
+            remove->father->right = NULL;               
         }
     }
 
     //no com um filho
     else if(!remove->left ^ !remove->right) {
         if (ABB_size((*no)) > 2) {
+            int lado = 0; 
+
             if (!remove->left) {
-                remove->father->right = remove->right;
-                remove->right->father = remove->father;
+               remove->right->father = remove->father;
             }
+
             else {
-                remove->father->left = remove->left;
-                remove->left->father = remove->father;
+               remove->left->father = remove->father; 
+               lado = 1;
             }
+
+            if (remove->key > remove->father->key) {
+                remove->father->right = (lado == 1) ? remove->left : remove->right;
+            }
+
+            else {
+                remove->father->left = (lado == 1) ? remove->left : remove->right;
+            }
+
+            control = 1;
         }
         else {
-           if (!remove->left) {
-               remove->key = remove->right->key; 
-               remove->right = NULL;
-               free(remove->right);
-           }
+            if (!remove->left) {
+                remove->key = remove->right->key; 
+                remove->right = NULL;
+                free(remove->right);
+            }
 
-           else {
-               remove->key = remove->left->key;
-               remove->left = NULL;
-               free(remove->left);
-           }
-           control = 0;
+            else {
+                remove->key = remove->left->key;
+                remove->left = NULL;
+                free(remove->left);
+            }
+            control = 0;
         }
     }
 
@@ -152,8 +204,12 @@ void ABB_destroy(ABB* no){
        
         ABB* sx = ABB_largest_left(remove);
  
-        if (sx == remove->left) { remove->left = sx->left; }
-        else { sx->father->right = NULL; }
+        if (sx == remove->left) {        
+            remove->left = sx->left;                    
+        }
+        else {
+           sx->father->right = NULL;
+        }
 
         control = 0;
         remove->key = sx->key; 
@@ -161,9 +217,11 @@ void ABB_destroy(ABB* no){
     }
 
     if (control) { free(remove); }
-
 }
 
+/* função que retorna o endereço do maior elemento à esquerda do nó
+ *  @param no: ponteiro para o nó
+ */
 ABB* ABB_largest_left(ABB *no){
     if (!no) {return NULL;}
 
@@ -178,12 +236,15 @@ ABB* ABB_largest_left(ABB *no){
     return largest;
 }
 
+/* função que retorna o endereço do menor elemento à direita do nó
+ *  @param no: ponteiro para o nó
+ */
 ABB* ABB_smaller_right(ABB *no){
     if (!no) {return NULL;}
 
     ABB* aux = no->right; 
     ABB* largest = aux;
-    
+
     while (!!aux) {
         largest = aux;
         aux = aux->left;
@@ -191,4 +252,6 @@ ABB* ABB_smaller_right(ABB *no){
 
     return largest;
 }
+
+
 
