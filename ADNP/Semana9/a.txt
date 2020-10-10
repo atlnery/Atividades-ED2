@@ -1,0 +1,16 @@
+código principal 
+
+    ABB_insert(&abb, 70);
+    ABB_insert(&abb, 39);
+    ABB_insert(&abb, 88);
+
+    ABB_remove(&abb, 70);
+
+resultado:
+                              (dir)
+                    88(dir)
+                              (esq)
+          39(raiz)
+                    (esq)
+
+

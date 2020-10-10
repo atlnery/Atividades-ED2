@@ -1,0 +1,27 @@
+código principal: 
+
+    ABB_insert(&abb, 10);
+    ABB_insert(&abb, 4);
+    ABB_insert(&abb, 20);
+    ABB_insert(&abb, 6);
+    ABB_insert(&abb, 2);
+    ABB_insert(&abb, 3);
+    ABB_insert(&abb, 5);
+    ABB_insert(&abb, 7);
+
+    ABB_remove(&abb, 10);
+    ABB_remove(&abb, 4);
+    ABB_remove(&abb, 5);
+
+resultado:
+                              (dir)
+                    20(dir)
+                              (esq)
+          7(raiz)
+                                        (dir)
+                              6(dir)
+                                        (esq)
+                    3(esq)
+                                        (dir)
+                              2(esq)
+                                        (esq)

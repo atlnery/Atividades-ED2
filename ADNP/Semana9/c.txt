@@ -1,0 +1,31 @@
+código principal:
+
+    int v[] = {30, 50, 40, 47, 15, 20, 25, 17, 19, 4, 7, 0};
+
+    for (int i = 0; i < 12; i++) {
+         ABB_insert(&abb, v[i]);
+    }
+
+    ABB_remove(&abb, 0);
+    ABB_remove(&abb, 30);
+    ABB_remove(&abb, 15);
+    ABB_remove(&abb, 20);
+
+resultado:
+                                --(dir)
+                    50(dir)
+                                                  --(dir)
+                                        47(dir)
+                                                  --(esq)
+                              40(esq)
+                                        --(esq)
+          25(raiz)
+                                                  --(dir)
+                                        19(dir)
+                                                  --(esq)
+                              17(dir)
+                                        --(esq)
+                    7(esq)
+                                        --(dir)
+                              4(esq)
+                                        --(esq)
