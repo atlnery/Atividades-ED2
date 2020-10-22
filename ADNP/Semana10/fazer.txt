@@ -1,0 +1,11 @@
+
+h. Implemente a função AT_Min, que retorna a menor chave da trie. Considere que a menor chave é
+aquela que é a primeira em uma ordenação lexicográfica em relação as demais chaves. Por exemplo “abc” é
+lexicograficamente menor que “abd”.
+i. Implemente a função AT_Max, que retorna a maior chave da trie. Considere que a maior chave é
+aquela que é a última em uma ordenação lexicográfica em relação as demais chaves. Por exemplo “xyz” é
+lexicograficamente maior que “xyy”.
+
+3. Use os casos de teste fornecidos e teste sua implementação do exercício 2. Preencha a tabela abaixo com o
+número de substrings distintas em cada caso. DICA: Caso esteja dando estouro de pilha (por conta de uma
+pilha de recursão muito grande), tente usar as versões iterativas das funções de Inserção e Busca
